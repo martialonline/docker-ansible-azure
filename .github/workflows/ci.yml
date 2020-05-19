@@ -1,0 +1,52 @@
+name: Continuous Integration
+
+on:
+  push:
+    branches:
+      - '**'
+  pull_request:
+    branches:
+      - master
+  create:
+    tags:
+      - '[0-9]+.[0-9]+.[0-9]+*'
+
+env:
+  DOCKER_BUILDKIT: 1
+
+jobs:
+  build:
+    name: Build Artifact
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+      - name: Build Image
+        uses: docker/build-push-action@v1
+        with:
+          repository: ${{ github.repository }}
+          dockerfile: Dockerfile
+          path: '.'
+          tags: ${{ github.run_number }}
+          push: false
+      - name: Check Image
+        run: docker image inspect ${{ github.repository }}:${{ github.run_number }}
+
+  publish:
+    name: Publish Artifact
+    runs-on: ubuntu-latest
+    needs: build
+    if: github.event_name == 'create' && contains(github.ref, 'refs/tags/')
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+      - name: Publish to Dockerhub
+        uses: docker/build-push-action@v1
+        with:
+          repository: ${{ github.repository }}
+          dockerfile: Dockerfile
+          path: '.'
+          username: ${{ github.actor }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+          tag_with_ref: true
+          push: true
