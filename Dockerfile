@@ -16,10 +16,10 @@ RUN apk --update --no-cache add \
     zsh
 
 RUN apk --update add --virtual .build-dependencies \
-    build-base && \
+    build-base \
     libffi-dev \
     openssl-dev \
-    python3-dev \
+    python3-dev && \
     pip3 install --upgrade \
     pip \
     cffi && \
