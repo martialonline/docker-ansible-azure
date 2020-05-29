@@ -2,11 +2,13 @@ name: Continuous Integration
 
 on:
   push:
+    paths-ignore:
+      - 'README.md'
     branches:
-      - '**'
+      - 'master'
   pull_request:
     branches:
-      - master
+      - 'master'
   create:
     tags:
       - '[0-9]+.[0-9]+.[0-9]+*'
