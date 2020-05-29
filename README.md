@@ -1,4 +1,4 @@
-
+![Build](https://github.com/martialonline/docker-ansible-azure/workflows/Continuous%20Integration/badge.svg)
 Small Docker container based on Alpine 3.11 including Ansible version 2.9.9 and the **Microsoft Azure** modules.
 
 ## Usage
