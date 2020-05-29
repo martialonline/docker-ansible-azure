@@ -13,8 +13,7 @@ $ docker run -it \
   -e AZURE_SECRET \
   -e AZURE_SUBSCRIPTION_ID \
   -e AZURE_TENANT \
-  marti
-  alonline/docker-ansible-azure:latest sh
+  martialonline/docker-ansible-azure:latest sh
 ```
 
 ### Test Ansible
